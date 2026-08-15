@@ -35,6 +35,7 @@ const caseStudies = {
 
 const dialog = document.querySelector('#case-dialog');
 const dialogContent = dialog.querySelector('.dialog-content');
+const dialogScrollHint = dialog.querySelector('.dialog-scroll-hint');
 
 function openCase(key) {
   const item = caseStudies[key];
@@ -53,6 +54,8 @@ function openCase(key) {
       <img src="${item.detailImage}" alt="Rangkaian desain ${item.title}" decoding="async">
     </figure>`;
   dialog.showModal();
+  dialog.scrollTop = 0;
+  dialogScrollHint.classList.remove('is-hidden');
   document.body.classList.add('dialog-open');
 }
 
@@ -64,6 +67,13 @@ document.querySelectorAll('.project').forEach(project => {
 });
 
 dialog.querySelector('.dialog-close').addEventListener('click', () => dialog.close());
+dialogScrollHint.addEventListener('click', () => {
+  const details = dialog.querySelector('.dialog-body');
+  if (details) dialog.scrollTo({ top: details.offsetTop, behavior: 'smooth' });
+});
+dialog.addEventListener('scroll', () => {
+  dialogScrollHint.classList.toggle('is-hidden', dialog.scrollTop > 90);
+}, { passive: true });
 dialog.addEventListener('click', event => { if (event.target === dialog) dialog.close(); });
 dialog.addEventListener('close', () => document.body.classList.remove('dialog-open'));
 
@@ -99,3 +109,57 @@ document.querySelectorAll('a[href^="#"]').forEach(link => link.addEventListener(
   const target = document.querySelector(link.getAttribute('href'));
   if (target) { event.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
 }));
+
+const testimonialCarousel = document.querySelector('.testimonial-carousel');
+if (testimonialCarousel) {
+  const testimonialSlides = [...testimonialCarousel.querySelectorAll('.testimonial-slide')];
+  const testimonialCount = document.querySelector('.testimonial-count');
+  const previousTestimonial = document.querySelector('[data-testimonial-prev]');
+  const nextTestimonial = document.querySelector('[data-testimonial-next]');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let testimonialIndex = 0;
+  let testimonialTimer;
+
+  function showTestimonial(nextIndex) {
+    testimonialIndex = (nextIndex + testimonialSlides.length) % testimonialSlides.length;
+    testimonialSlides.forEach((slide, index) => {
+      const isActive = index === testimonialIndex;
+      slide.classList.toggle('is-active', isActive);
+      slide.setAttribute('aria-hidden', String(!isActive));
+    });
+    testimonialCount.textContent = `${String(testimonialIndex + 1).padStart(2, '0')} / ${String(testimonialSlides.length).padStart(2, '0')}`;
+  }
+
+  function stopTestimonialAutoplay() {
+    window.clearInterval(testimonialTimer);
+  }
+
+  function startTestimonialAutoplay() {
+    stopTestimonialAutoplay();
+    if (!reduceMotion) testimonialTimer = window.setInterval(() => showTestimonial(testimonialIndex + 1), 7000);
+  }
+
+  previousTestimonial.addEventListener('click', () => {
+    showTestimonial(testimonialIndex - 1);
+    startTestimonialAutoplay();
+  });
+  nextTestimonial.addEventListener('click', () => {
+    showTestimonial(testimonialIndex + 1);
+    startTestimonialAutoplay();
+  });
+  testimonialCarousel.addEventListener('keydown', event => {
+    if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+      event.preventDefault();
+      showTestimonial(testimonialIndex + (event.key === 'ArrowRight' ? 1 : -1));
+      startTestimonialAutoplay();
+    }
+  });
+  testimonialCarousel.closest('.testimonial-block').addEventListener('mouseenter', stopTestimonialAutoplay);
+  testimonialCarousel.closest('.testimonial-block').addEventListener('mouseleave', startTestimonialAutoplay);
+  testimonialCarousel.closest('.testimonial-block').addEventListener('focusin', stopTestimonialAutoplay);
+  testimonialCarousel.closest('.testimonial-block').addEventListener('focusout', startTestimonialAutoplay);
+  document.addEventListener('visibilitychange', () => document.hidden ? stopTestimonialAutoplay() : startTestimonialAutoplay());
+
+  showTestimonial(0);
+  startTestimonialAutoplay();
+}

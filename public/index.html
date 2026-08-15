@@ -138,12 +138,35 @@
       <div class="tools-block reveal">
         <p class="eyebrow">04 / My toolbox</p>
         <h2>Tools I use to move<br><em>ideas forward.</em></h2>
-        <div class="tool-cloud"><span>Figma</span><span>Framer</span><span>Notion</span><span>Miro</span><span>Maze</span><span>VS Code</span><span>Supabase</span><span>Antigravity</span></div>
+        <div class="tool-cloud"><span>Figma</span><span>Framer</span><span>Notion</span><span>Miro</span><span>Maze</span><span>VS Code</span><span>Supabase</span><span>Antigravity</span><span>Claude Code</span><span>Codex</span><span>HTML</span><span>CSS</span></div>
       </div>
-      <div class="testimonial-block reveal">
-        <p class="eyebrow">From a collaborator</p>
-        <blockquote>James describes Refka as a dedicated and highly capable designer with a strong creative mindset.</blockquote>
-        <p><b>James Angle</b><br>Chief Product Officer</p>
+      <div class="testimonial-block reveal" aria-label="Collaborator testimonials">
+        <div class="testimonial-head">
+          <p class="eyebrow">From collaborators</p>
+          <div class="testimonial-controls">
+            <span class="testimonial-count" aria-live="polite">01 / 04</span>
+            <button type="button" class="testimonial-arrow" data-testimonial-prev aria-label="Previous testimonial">←</button>
+            <button type="button" class="testimonial-arrow" data-testimonial-next aria-label="Next testimonial">→</button>
+          </div>
+        </div>
+        <div class="testimonial-carousel" tabindex="0">
+          <article class="testimonial-slide is-active" aria-hidden="false">
+            <blockquote>“I am pleased to strongly recommend Refka Furqon for the position of UI/UX Designer. Having worked closely with Refka for two years at Unbox Universe, I can confidently attest to his exceptional skills, dedication, and creative mindset.”</blockquote>
+            <div class="testimonial-author"><img src="./assets/testimonial-james.png" alt="James Angle" width="56" height="56"><p><b>James Angle</b><br>Chief Product Officer</p></div>
+          </article>
+          <article class="testimonial-slide" aria-hidden="true">
+            <blockquote>“I’ve been fortunate to know Refka both professionally and personally, and I highly encourage future employers to bet on him. I would be happy to provide a reference at any time and wish him the best in his future endeavours.”</blockquote>
+            <div class="testimonial-author"><img src="./assets/testimonial-oliver.jpeg" alt="Oliver Tufft" width="56" height="56"><p><b>Oliver Tufft</b><br>Product Manager</p></div>
+          </article>
+          <article class="testimonial-slide" aria-hidden="true">
+            <blockquote>“Refka is an excellent team player. He offers help whenever possible and provides valuable feedback through his creative way of thinking, while always keeping the user in mind.”</blockquote>
+            <div class="testimonial-author"><img src="./assets/testimonial-ferdinand.jpeg" alt="Ferdinand Schultz" width="56" height="56"><p><b>Ferdinand Schultz</b><br>Product Manager</p></div>
+          </article>
+          <article class="testimonial-slide" aria-hidden="true">
+            <blockquote>“Refka’s expertise in UX/UI design has been invaluable, and I cannot be thankful enough for the privilege of working alongside him.”</blockquote>
+            <div class="testimonial-author"><img src="./assets/testimonial-rizqi.jpeg" alt="Rizqi Muttaqin" width="56" height="56"><p><b>Rizqi Muttaqin</b><br>Product Designer</p></div>
+          </article>
+        </div>
       </div>
     </section>
 
@@ -157,6 +180,9 @@
 
   <dialog class="case-dialog" id="case-dialog">
     <button class="dialog-close magnetic" aria-label="Close case study">×</button>
+    <button class="dialog-scroll-hint" type="button" aria-label="Scroll to project details">
+      <span>Scroll to explore</span><b aria-hidden="true">↓</b>
+    </button>
     <div class="dialog-content"></div>
   </dialog>
 
